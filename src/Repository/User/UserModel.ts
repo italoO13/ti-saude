@@ -16,7 +16,7 @@ export default class UserModel implements IUserModel {
       }
     })
     if (existingUser != null) {
-      throw new CustomError(404, 'Email ou crm já cadastrados !')
+      throw new CustomError(404, 'Email or CRM already registered!')
     }
   }
 
