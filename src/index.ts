@@ -1,5 +1,6 @@
 import express from 'express'
 import router from './routes'
+import type customError from './utils/customError'
 
 class App {
   public app: express.Express
@@ -11,9 +12,12 @@ class App {
 
     this.app.get('/', (req, res) => res.json({ ok: true }))
 
-    this.app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    this.app.use((err: customError, req: express.Request, res: express.Response, _next: express.NextFunction) => {
       console.log(err)
-      return res.status(500).json({ message: 'internal error' })
+      if (isNaN(err.code)) {
+        return res.status(500).json({ message: 'internal error' })
+      }
+      return res.status(err.code).json({ message: err.message })
     })
   }
 
