@@ -9,10 +9,10 @@ export default class UserController implements IUserController {
     this.service = service
   }
 
-  create = async (req: Request, res: Response, next: NextFunction): Promise<Response> => {
+  create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       await this.service.create(req.body)
-      return res.status(201).json({ message: 'Created' })
+      res.status(201).json({ message: 'Created' })
     } catch (error) {
       next(error)
     }
