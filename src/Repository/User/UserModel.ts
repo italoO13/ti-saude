@@ -1,6 +1,7 @@
 import type IUser from '../../interfaces/IUser'
 import type IUserModel from './IUserModel'
 import { prismaClient } from '../../database/prismaClient'
+import CustomError from '../../utils/customError'
 
 export default class UserModel implements IUserModel {
   private readonly model = prismaClient
@@ -15,7 +16,7 @@ export default class UserModel implements IUserModel {
       }
     })
     if (existingUser != null) {
-      throw Error('Email ou crm já cadastrados !')
+      throw new CustomError(404, 'Email ou crm já cadastrados !')
     }
   }
 
