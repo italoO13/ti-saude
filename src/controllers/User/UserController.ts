@@ -27,4 +27,17 @@ export default class UserController implements IUserController {
       next(error)
     }
   }
+
+  deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id } = req.params
+      const response = await this.service.deleteUser(id)
+      if (response) {
+        res.status(200).json({ message: 'successfully delete' })
+      }
+      res.status(500).json({ message: 'Error server' })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
