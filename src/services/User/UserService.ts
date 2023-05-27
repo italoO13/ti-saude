@@ -17,4 +17,8 @@ export default class UserService implements IUserService {
   async getUserById (id: string): Promise<IUser> {
     return await this._model.getUserById(id)
   }
+
+  async deleteUser (id: string): Promise<boolean> {
+    return await this._model.deleteUser(id)
+  }
 }
