@@ -15,6 +15,7 @@ export default class UserModel implements IUserModel {
         ]
       }
     })
+    console.log(existingUser)
     if (existingUser != null) {
       throw new CustomError(404, 'Email or CRM already registered!')
     }
