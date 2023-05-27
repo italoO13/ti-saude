@@ -13,4 +13,8 @@ export default class UserService implements IUserService {
   async create (user: IUser): Promise<void> {
     await this._model.create({ ...user, password: await crypt(user.password) })
   }
+
+  async getUserById (id: string): Promise<IUser> {
+    return await this._model.getUserById(id)
+  }
 }
