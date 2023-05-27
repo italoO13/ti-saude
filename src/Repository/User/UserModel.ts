@@ -18,4 +18,12 @@ export default class UserModel extends FactoryPrisma implements IUserModel {
     await this.validatedUser(email, crm)
     await this.createUser(user)
   }
+
+  async getUserById (id: string): Promise<IUser> {
+    const user = await this.findById(id)
+    if (user == null) {
+      throw new CustomError(404, 'User not Found')
+    }
+    return user
+  }
 }
