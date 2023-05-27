@@ -4,4 +4,12 @@ const crypt = async (password: string): Promise<string> => {
   return await bcrypt.hash(password, 8)
 }
 
-export default crypt
+const validatePassword = async (passwordEncript: string, passwordDecript: string): Promise<boolean> => {
+  const compare = await bcrypt.compare(passwordEncript, passwordDecript)
+  return compare
+}
+
+export default {
+  crypt,
+  validatePassword
+}
