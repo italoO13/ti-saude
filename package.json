@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "ts-node-dev ./src/server.ts",
-    "test": "nyc mocha --config mocha.config.js src/tests/integ/user.test.ts"
+    "test": "nyc mocha --config mocha.config.js src/tests/**/*.test.ts"
   },
   "keywords": [],
   "author": "",
