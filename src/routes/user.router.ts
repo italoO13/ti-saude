@@ -12,5 +12,6 @@ const userController = new UserController(userService)
 const userMiddleware = new UserMiddleware()
 
 router.post('/', userMiddleware.validateUser, userController.create)
+router.get('/:id', userController.getById)
 
 export default router
