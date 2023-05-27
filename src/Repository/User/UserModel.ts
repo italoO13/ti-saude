@@ -7,7 +7,6 @@ export default class UserModel extends FactoryPrisma implements IUserModel {
   private async validatedUser (email: string, crm: string): Promise<void> {
     const existingUser = await this.getByEmailORCrm(email, crm)
 
-    console.log(existingUser)
     if (existingUser != null) {
       throw new CustomError(404, 'Email or CRM already registered!')
     }
@@ -25,5 +24,14 @@ export default class UserModel extends FactoryPrisma implements IUserModel {
       throw new CustomError(404, 'User not Found')
     }
     return user
+  }
+
+  async deleteUser (id: string): Promise<boolean> {
+    const user = await this.findById(id)
+    if (user == null) {
+      throw new CustomError(404, 'User not Found')
+    }
+    await this.deleteOne(id)
+    return true
   }
 }
