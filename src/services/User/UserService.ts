@@ -1,7 +1,7 @@
 import type IUserModel from '../../Repository/User/IUserModel'
 import type IUser from '../../interfaces/IUser'
 import type IUserService from './IUserService'
-import crypt from '../../utils/cryptPassword'
+import bcrypt from '../../utils/cryptPassword'
 
 export default class UserService implements IUserService {
   private readonly _model: IUserModel
@@ -11,7 +11,7 @@ export default class UserService implements IUserService {
   }
 
   async create (user: IUser): Promise<void> {
-    await this._model.create({ ...user, password: await crypt(user.password) })
+    await this._model.create({ ...user, password: await bcrypt.crypt(user.password) })
   }
 
   async getUserById (id: string): Promise<IUser> {
