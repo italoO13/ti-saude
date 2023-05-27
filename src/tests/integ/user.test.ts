@@ -65,6 +65,40 @@ describe('Teste da rota User', () => {
     })
   })
 
+  describe('/DELETE/:id- Ao deletar uma informção por ID', () => {
+    describe('Quando o usuário é encontrado', () => {
+      beforeEach(() => {
+        sinon.stub(FactoryPrisma.prototype, 'deleteOne').resolves()
+        sinon.stub(FactoryPrisma.prototype, 'findById').resolves(mocks.user)
+      })
+
+      afterEach(() => {
+        sinon.restore()
+      })
+
+      it('Deve retornar um usuário identico a mocks.getUser e status 200', async () => {
+        const result = await chai.request(app).delete('/users/:1')
+        expect(result.status).to.equal(200)
+        expect(result.body).to.deep.equal({ message: 'successfully delete' })
+      })
+    })
+    describe('Quando o usuário não é encontrado', () => {
+      beforeEach(() => {
+        sinon.stub(FactoryPrisma.prototype, 'findById').resolves(null)
+      })
+
+      afterEach(() => {
+        sinon.restore()
+      })
+
+      it('Deve enviar um erro de status 404 e mensagem User not Found', async () => {
+        const result = await chai.request(app).delete('/users/:1')
+        expect(result.status).to.equal(404)
+        expect(result.body).to.deep.equal({ message: 'User not Found' })
+      })
+    })
+  })
+
   describe('/GET/:id - Ao solicitar as informações do usuário por ID', () => {
     describe('Quando o usuário é encontrado', () => {
       beforeEach(() => {
