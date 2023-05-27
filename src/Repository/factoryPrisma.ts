@@ -21,6 +21,23 @@ export default class FactoryPrisma {
     return existingUser as unknown as IUser
   }
 
+  public async findById (id: string): Promise<IUser | null> {
+    const user = await this.model.user.findFirst({
+      where: {
+        id
+      },
+      select: {
+        password: false,
+        id: true,
+        name: true,
+        email: true,
+        crm: true,
+        created_at: true
+      }
+    })
+    return user as unknown as IUser
+  }
+
   public async createUser ({ email, crm, name, password }: IUser): Promise<void> {
     await this.model.user.create({
       data: {
