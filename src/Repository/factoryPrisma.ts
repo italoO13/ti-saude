@@ -56,4 +56,13 @@ export default class FactoryPrisma {
       }
     })
   }
+
+  public async findUserByEmail (email: string): Promise<IUser | null > {
+    const user = this.model.user.findFirst({
+      where: {
+        email
+      }
+    })
+    return user as unknown as IUser
+  }
 }
