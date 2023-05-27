@@ -13,5 +13,6 @@ const userMiddleware = new UserMiddleware()
 
 router.post('/', userMiddleware.validateUser, userController.create)
 router.get('/:id', userController.getById)
+router.delete('/:id', userController.deleteUser)
 
 export default router
