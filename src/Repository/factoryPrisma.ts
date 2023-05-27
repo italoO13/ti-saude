@@ -48,4 +48,12 @@ export default class FactoryPrisma {
       }
     })
   }
+
+  public async deleteOne (id: string): Promise<void> {
+    await this.model.user.delete({
+      where: {
+        id
+      }
+    })
+  }
 }
