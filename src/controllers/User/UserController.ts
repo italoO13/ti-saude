@@ -17,4 +17,14 @@ export default class UserController implements IUserController {
       next(error)
     }
   }
+
+  getById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id } = req.params
+      const user = await this.service.getUserById(id)
+      res.status(200).json(user)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
