@@ -4,6 +4,7 @@ import chaiHttp from 'chai-http'
 import FactoryPrisma from '../../Repository/factoryPrisma'
 import mocks from './mock'
 import { app } from '../../index'
+import type IUser from '../../interfaces/IUser'
 
 chai.use(chaiHttp)
 const { expect } = chai
@@ -60,6 +61,39 @@ describe('Teste da rota User', () => {
       it('deve retornar status 400 caso crm não seja informado', async () => {
         const result = await chai.request(app).post('/users').send({ ...mocks.user, crm: '' })
         expect(result.status).to.equal(400)
+      })
+    })
+  })
+
+  describe('/GET/:id - Ao solicitar as informações do usuário por ID', () => {
+    describe('Quando o usuário é encontrado', () => {
+      beforeEach(() => {
+        sinon.stub(FactoryPrisma.prototype, 'findById').resolves(mocks.getUser as unknown as IUser)
+      })
+
+      afterEach(() => {
+        sinon.restore()
+      })
+
+      it('Deve retornar um usuário identico a mocks.getUser e status 200', async () => {
+        const result = await chai.request(app).get('/users/:1')
+        expect(result.status).to.equal(200)
+        expect(result.body).to.deep.equal(mocks.getUser)
+      })
+    })
+    describe('Quando o usuário não é encontrado', () => {
+      beforeEach(() => {
+        sinon.stub(FactoryPrisma.prototype, 'findById').resolves(null)
+      })
+
+      afterEach(() => {
+        sinon.restore()
+      })
+
+      it('Deve retornar um usuário identico a mocks.getUser e status 200', async () => {
+        const result = await chai.request(app).get('/users/:1')
+        expect(result.status).to.equal(404)
+        expect(result.body).to.deep.equal({ message: 'User not Found' })
       })
     })
   })
