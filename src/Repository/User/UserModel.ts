@@ -1,20 +1,12 @@
 import type IUser from '../../interfaces/IUser'
 import type IUserModel from './IUserModel'
-import { prismaClient } from '../../database/prismaClient'
 import CustomError from '../../utils/customError'
+import FactoryPrisma from '../factoryPrisma'
 
-export default class UserModel implements IUserModel {
-  private readonly model = prismaClient
-
+export default class UserModel extends FactoryPrisma implements IUserModel {
   private async validatedUser (email: string, crm: string): Promise<void> {
-    const existingUser = await this.model.user.findFirst({
-      where: {
-        OR: [
-          { email },
-          { crm }
-        ]
-      }
-    })
+    const existingUser = await this.getByEmailORCrm(email, crm)
+
     console.log(existingUser)
     if (existingUser != null) {
       throw new CustomError(404, 'Email or CRM already registered!')
@@ -22,15 +14,8 @@ export default class UserModel implements IUserModel {
   }
 
   async create (user: IUser): Promise<void> {
-    const { email, crm, name, password } = user
+    const { email, crm } = user
     await this.validatedUser(email, crm)
-    await this.model.user.create({
-      data: {
-        email,
-        crm,
-        name,
-        password
-      }
-    })
+    await this.createUser(user)
   }
 }
