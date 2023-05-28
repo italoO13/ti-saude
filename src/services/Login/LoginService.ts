@@ -12,7 +12,7 @@ export default class LoginService implements ILoginService {
     const user = await this._model.findOne(email)
     const validatePass = await bycrpt.validatePassword(password, user.password)
     if (!validatePass) {
-      throw new CustomError(401, 'Incorret email or password')
+      throw new CustomError(401, 'Incorrect email or password')
     }
     const token = this.auth.generateToken({
       id: user.id,
