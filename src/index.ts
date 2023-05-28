@@ -13,7 +13,7 @@ class App {
     this.app.get('/', (req, res) => res.json({ ok: true }))
 
     this.app.use((err: customError, req: express.Request, res: express.Response, _next: express.NextFunction) => {
-      console.log(err)
+      // console.log(err)
       if (isNaN(err.code)) {
         return res.status(500).json({ message: 'internal error' })
       }
