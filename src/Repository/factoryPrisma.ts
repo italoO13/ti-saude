@@ -1,6 +1,7 @@
 import { type PrismaClient } from '@prisma/client'
 import { prismaClient } from '../database/prismaClient'
 import type IUser from '../interfaces/IUser'
+import type IPacient from '../interfaces/IPacient'
 
 export default class FactoryPrisma {
   private readonly model: PrismaClient
@@ -49,6 +50,17 @@ export default class FactoryPrisma {
     })
   }
 
+  public async createPacient ({ email, phone, name, userId }: IPacient): Promise<void> {
+    await this.model.pacient.create({
+      data: {
+        email,
+        name,
+        phone,
+        userId
+      }
+    })
+  }
+
   public async deleteOne (id: string): Promise<void> {
     await this.model.user.delete({
       where: {
@@ -64,5 +76,14 @@ export default class FactoryPrisma {
       }
     })
     return user as unknown as IUser
+  }
+
+  public async getPacientByEmail (email: string): Promise<IPacient | null > {
+    const pacient = this.model.pacient.findFirst({
+      where: {
+        email
+      }
+    })
+    return pacient as unknown as IPacient
   }
 }
