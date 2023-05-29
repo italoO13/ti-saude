@@ -86,4 +86,22 @@ export default class FactoryPrisma {
     })
     return pacient as unknown as IPacient
   }
+
+  public async getAllPacient (userId: string): Promise<IPacient[]> {
+    const pacient = this.model.pacient.findMany({
+      where: {
+        userId
+      }
+    })
+    return pacient as unknown as IPacient[]
+  }
+
+  public async getPacientId (id: string): Promise<IPacient | null > {
+    const pacient = this.model.pacient.findFirst({
+      where: {
+        id
+      }
+    })
+    return pacient as unknown as IPacient
+  }
 }
