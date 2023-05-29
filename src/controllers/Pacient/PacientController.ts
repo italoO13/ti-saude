@@ -40,4 +40,26 @@ export default class PacientController implements IPacientController {
       next(error)
     }
   }
+
+  updatePacientById = async (req: IRequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id } = req.user
+      const { pacientId } = req.params
+      const pacient = await this.service.updatePacientById(id, req.body, pacientId)
+      res.status(201).json(pacient)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  delete = async (req: IRequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id } = req.user
+      const { pacientId } = req.params
+      const pacient = await this.service.delete(id, pacientId)
+      res.status(201).json(pacient)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
