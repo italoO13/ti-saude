@@ -19,4 +19,25 @@ export default class PacientController implements IPacientController {
       next(error)
     }
   }
+
+  getALl = async (req: IRequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id } = req.user
+      const pacients = await this.service.getAll(id)
+      res.status(200).json(pacients)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  getPacient = async (req: IRequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { id } = req.user
+      const { pacientId } = req.params
+      const pacient = await this.service.getPacient(id, pacientId)
+      res.status(200).json(pacient)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
