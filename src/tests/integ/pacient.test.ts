@@ -144,45 +144,49 @@ describe('Teste da rota Pacients', () => {
     })
   })
 
-  // describe('/UPDATE - Atualiza um pacient', () => {
-  //   describe('Em caso de sucesso', () => {
-  //     beforeEach(() => {
-  //       sinon.stub(FactoryPrisma.prototype, 'findById').resolves(mocks.user)
-  //       sinon.stub(FactoryPrisma.prototype, 'updatePacient').resolves()
-  //       sinon.stub(FactoryPrisma.prototype, 'getPacientId').resolves(mocks.pacient as unknown as IPacient)
-  //       sinon.stub(auth.prototype, 'verifyToken').resolves({
-  //         id: '4940427b-cd40-4d4b-b848-f9acd54a3d00',
-  //         email: mocks.loginSucess.email
-  //       })
-  //     })
+  describe('/UPDATE - Atualiza um pacient', () => {
+    describe('Em caso de sucesso', () => {
+      beforeEach(() => {
+        sinon.stub(FactoryPrisma.prototype, 'findById').resolves(mocks.user)
+        sinon.stub(FactoryPrisma.prototype, 'updatePacient').resolves()
+        sinon.stub(FactoryPrisma.prototype, 'getPacientId').resolves(mocks.pacient as unknown as IPacient)
+        sinon.stub(auth.prototype, 'verifyToken').resolves({
+          id: '4940427b-cd40-4d4b-b848-f9acd54a3d00',
+          email: mocks.loginSucess.email
+        })
+      })
 
-  //     afterEach(() => {
-  //       sinon.restore()
-  //     })
+      afterEach(() => {
+        sinon.restore()
+      })
 
-  //     it('Deve atualizar um paciente e retornar status 201 com um response igual ao mocks.pacient', async () => {
-  //       const result = await chai.request(app).put('/pacients/1').send(mocks.pacient)
-  //         .set('authorization', mocks.token)
-  //       expect(result.status).to.equal(201)
-  //       expect(result.body).to.deep.equal(mocks.pacient)
-  //     })
-  //   })
+      it('Deve atualizar um paciente e retornar status 201 com um response igual ao mocks.pacient', async () => {
+        const result = await chai.request(app).put('/pacients/1').send(mocks.pacient)
+          .set('authorization', mocks.token)
+        expect(result.status).to.equal(201)
+        expect(result.body).to.deep.equal(mocks.pacient)
+      })
+    })
 
-  //   describe('Em caso de falha', () => {
-  //     beforeEach(() => {
-  //       sinon.stub(FactoryPrisma.prototype, 'updatePacient').resolves()
-  //     })
-  //     afterEach(() => {
-  //       sinon.restore()
-  //     })
+    describe('Em caso de falha', () => {
+      beforeEach(() => {
+        sinon.stub(FactoryPrisma.prototype, 'updatePacient').resolves()
+        sinon.stub(auth.prototype, 'verifyToken').resolves({
+          id: '4940427b-cd40-4d4b-b848-f9acd54a3d00',
+          email: mocks.loginSucess.email
+        })
+      })
+      afterEach(() => {
+        sinon.restore()
+      })
 
-  //     it('Retorna status 404 quando pacient não existe', async () => {
-  //       sinon.stub(FactoryPrisma.prototype, 'getPacientId').resolves()
-  //       const result = await chai.request(app).put('/pacients/1').send(mocks.pacient)
-  //         .set('authorization', mocks.token)
-  //       expect(result.status).to.equal(404)
-  //       expect(result.body).to.deep.equal({ message: 'Pacient not exists' })
-  //     })
-  //   })
-  // })
+      it('Retorna status 404 quando pacient não existe', async () => {
+        sinon.stub(FactoryPrisma.prototype, 'getPacientId').resolves()
+        const result = await chai.request(app).put('/pacients/1').send(mocks.pacient)
+          .set('authorization', mocks.token)
+        expect(result.status).to.equal(404)
+        expect(result.body).to.deep.equal({ message: 'Pacient not exists' })
+      })
+    })
+  })
 })
