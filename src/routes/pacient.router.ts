@@ -12,5 +12,7 @@ const pacientController = new PacientController(pacientService)
 const pacientMiddeware = new Auth()
 
 router.post('/', pacientMiddeware.authUser, pacientController.create)
+router.get('/', pacientMiddeware.authUser, pacientController.getALl)
+router.get('/:pacientId', pacientMiddeware.authUser, pacientController.getPacient)
 
 export default router
