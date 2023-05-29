@@ -17,3 +17,16 @@ jobs:
           node-version: 16
       - name: Executando testes
         run: npm install && npm test
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verifica o repositório do Git
+        uses: actions/checkout@v2
+
+      - name: Setup Railway CLI
+        uses: MadeByThePinsHub/setup-railway-cli-action@v0.1.0
+
+      - name: Deploy no Raiway
+        run: railway up --detach -s backend
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN}}
