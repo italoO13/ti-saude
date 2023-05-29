@@ -16,6 +16,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
+
+      - name: Instala o Railway CLI
+        run: npm install -g railway
+      
       - name: Executando testes
         run: npm install && npm test
   deploy:
@@ -29,8 +33,8 @@ jobs:
         with:
           npm-mode: true
 
-      - name: Setup Railway CLI
-        uses: MadeByThePinsHub/setup-railway-cli-action@v0.1.0
+      - name: Instala o Railway CLI
+        run: npm install -g railway
 
       - name: Deploy no Raiway
         run: railway up --detach -s backend
