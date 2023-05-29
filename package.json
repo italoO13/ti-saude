@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "npx prisma generate && ts-node src/server.ts",
     "dev": "ts-node-dev ./src/server.ts",
     "test": "nyc mocha --config mocha.config.js src/tests/**/*.test.ts"
   },
