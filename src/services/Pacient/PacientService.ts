@@ -23,4 +23,14 @@ export default class PacientService implements IPacientService {
 
     return pacients
   }
+
+  async updatePacientById (userId: string, body: IPacient, pacientId: string): Promise<IPacient | null> {
+    const pacient = await this._model.updatePacientById(userId, body, pacientId)
+    return pacient
+  }
+
+  async delete (userId: string, pacientId: string): Promise<IPacient | null> {
+    const pacient = await this._model.delete(userId, pacientId)
+    return pacient
+  }
 }
