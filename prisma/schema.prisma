@@ -22,7 +22,7 @@ model User {
 model Pacient {
   id  String  @id @default(uuid())
   name String 
-  email String @unique
+  email String 
   phone String
   created_at DateTime @default(now())
   user User @relation(fields: [userId], references: [id])
