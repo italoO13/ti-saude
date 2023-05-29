@@ -104,4 +104,25 @@ export default class FactoryPrisma {
     })
     return pacient as unknown as IPacient
   }
+
+  public async deletePacientById (id: string): Promise<void > {
+    await this.model.pacient.delete({
+      where: {
+        id
+      }
+    })
+  }
+
+  public async updatePacient ({ name, email, phone }: IPacient, id: string): Promise<void > {
+    await this.model.pacient.update({
+      data: {
+        name,
+        email,
+        phone
+      },
+      where: {
+        id
+      }
+    })
+  }
 }
