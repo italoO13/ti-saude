@@ -18,7 +18,9 @@ jobs:
           node-version: 16
 
       - name: Instala o Railway CLI
-        run: npm install -g railway
+        run:
+          rm -f /usr/local/bin/railway
+          npm install -g railway
       
       - name: Executando testes
         run: npm install && npm test
@@ -34,7 +36,9 @@ jobs:
           npm-mode: true
 
       - name: Instala o Railway CLI
-        run: npm install -g railway
+        run:           
+          rm -f /usr/local/bin/railway
+          npm install -g railway
 
       - name: Deploy no Raiway
         run: railway up --detach -s backend
