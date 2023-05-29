@@ -17,4 +17,24 @@ export default class PacientModel extends FactoryPrisma implements IPacientModel
     await this.validatedPacient(email)
     await this.createPacient(pacient)
   }
+
+  async getAll (userId: string): Promise<IPacient[]> {
+    const user = await this.findById(userId)
+
+    if (user == null) {
+      throw new CustomError(404, 'User not exists')
+    }
+
+    return await this.getAllPacient(userId)
+  }
+
+  async getPacient (userId: string, pacientId: string): Promise<IPacient | null> {
+    const user = await this.findById(userId)
+
+    if (user == null) {
+      throw new CustomError(404, 'User not exists')
+    }
+
+    return await this.getPacientId(pacientId)
+  }
 }
