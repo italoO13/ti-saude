@@ -12,6 +12,14 @@ export default class PacientModel extends FactoryPrisma implements IPacientModel
     }
   }
 
+  private async validatedUser (userId: string): Promise<void> {
+    const user = await this.findById(userId)
+
+    if (user == null) {
+      throw new CustomError(404, 'User not exists')
+    }
+  }
+
   async create (pacient: IPacient): Promise<void> {
     const { email } = pacient
     await this.validatedPacient(email)
@@ -19,21 +27,36 @@ export default class PacientModel extends FactoryPrisma implements IPacientModel
   }
 
   async getAll (userId: string): Promise<IPacient[]> {
-    const user = await this.findById(userId)
-
-    if (user == null) {
-      throw new CustomError(404, 'User not exists')
-    }
-
+    await this.validatedUser(userId)
     return await this.getAllPacient(userId)
   }
 
   async getPacient (userId: string, pacientId: string): Promise<IPacient | null> {
-    const user = await this.findById(userId)
+    await this.validatedUser(userId)
+    return await this.getPacientId(pacientId)
+  }
 
-    if (user == null) {
-      throw new CustomError(404, 'User not exists')
+  async delete (userId: string, pacientId: string): Promise<IPacient> {
+    await this.validatedUser(userId)
+
+    const pacient = await this.getPacientId(pacientId)
+
+    if (pacient == null) {
+      throw new CustomError(404, 'Pacient not exists')
     }
+
+    await this.deletePacientById(pacientId)
+    return pacient
+  }
+
+  async updatePacientById (userId: string, body: IPacient, pacientId: string): Promise<IPacient | null > {
+    await this.validatedUser(userId)
+    const pacient = await this.getPacientId(pacientId)
+
+    if (pacient == null) {
+      throw new CustomError(404, 'Pacient not exists')
+    }
+    await this.updatePacient(body, pacientId)
 
     return await this.getPacientId(pacientId)
   }
