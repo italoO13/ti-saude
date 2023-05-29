@@ -16,11 +16,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
-
-      - name: Instala o Railway CLI
-        run:
-          rm -f /usr/local/bin/railway
-          npm install -g railway
       
       - name: Executando testes
         run: npm install && npm test
@@ -32,8 +27,7 @@ jobs:
 
       - name: Instala o Railway CLI
         run:           
-          rm -f /usr/local/bin/railway
-          npm install -g railway
+          npm install -g @railway/cli
 
       - name: Deploy no Raiway
         run: railway up --detach -s backend
