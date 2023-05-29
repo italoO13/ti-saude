@@ -14,5 +14,7 @@ const pacientMiddeware = new Auth()
 router.post('/', pacientMiddeware.authUser, pacientController.create)
 router.get('/', pacientMiddeware.authUser, pacientController.getALl)
 router.get('/:pacientId', pacientMiddeware.authUser, pacientController.getPacient)
+router.delete('/:pacientId', pacientMiddeware.authUser, pacientController.delete)
+router.put('/:pacientId', pacientMiddeware.authUser, pacientController.updatePacientById)
 
 export default router
