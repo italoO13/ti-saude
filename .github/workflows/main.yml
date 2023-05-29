@@ -24,6 +24,11 @@ jobs:
       - name: Verifica o repositório do Git
         uses: actions/checkout@v2
 
+      - name: Install Railway CLI
+        uses: betrybe/setup-railway-cli-action@latest
+        with:
+          npm-mode: true
+
       - name: Setup Railway CLI
         uses: MadeByThePinsHub/setup-railway-cli-action@v0.1.0
 
