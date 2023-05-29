@@ -30,11 +30,6 @@ jobs:
       - name: Verifica o repositório do Git
         uses: actions/checkout@v2
 
-      - name: Install Railway CLI
-        uses: betrybe/setup-railway-cli-action@latest
-        with:
-          npm-mode: true
-
       - name: Instala o Railway CLI
         run:           
           rm -f /usr/local/bin/railway
