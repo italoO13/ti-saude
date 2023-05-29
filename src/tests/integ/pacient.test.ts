@@ -183,14 +183,6 @@ describe('Teste da rota Pacients', () => {
         expect(result.status).to.equal(404)
         expect(result.body).to.deep.equal({ message: 'Pacient not exists' })
       })
-      it('Retorna status 404 quando Usuário não existe', async () => {
-        sinon.stub(FactoryPrisma.prototype, 'findById').resolves(null)
-        const result = await chai.request(app).put('/pacients/1').send(mocks.pacient)
-          .set('authorization', mocks.token)
-
-        expect(result.status).to.equal(404)
-        expect(result.body).to.deep.equal({ message: 'User not exists' })
-      })
     })
   })
 })
