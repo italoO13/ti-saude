@@ -12,4 +12,15 @@ export default class PacientService implements IPacientService {
   async create (pacient: IPacient): Promise<void> {
     await this._model.create(pacient)
   }
+
+  async getAll (userId: string): Promise<IPacient[]> {
+    const pacients = await this._model.getAll(userId)
+    return pacients
+  }
+
+  async getPacient (userId: string, pacientId: string): Promise<IPacient | null> {
+    const pacients = await this._model.getPacient(userId, pacientId)
+
+    return pacients
+  }
 }
